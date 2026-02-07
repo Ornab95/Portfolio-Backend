@@ -3,7 +3,7 @@ services:
     name: portfolio-contact-api
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.11
@@ -14,4 +14,9 @@ services:
       - key: RECIPIENT_EMAIL
         sync: false
       - key: ALLOWED_ORIGINS
+<<<<<<< HEAD
         value: http://localhost:4200,https://ornab.netlify.app,https://ornab.me
+=======
+        value: http://localhost:4200,ornab.netlify.app,https://ornab.netlify.app,ornab.me,https://ornab.me
+
+>>>>>>> 72adea7 (remove env)

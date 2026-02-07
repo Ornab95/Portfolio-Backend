@@ -1,13 +1,16 @@
 # Environment variables (contains sensitive data)
 .env
 config.env
-.env.example
+
+# Keep example files
+!config.env.example
 
 # Python cache
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+.pytest_cache/
 
 # Virtual environment
 venv/

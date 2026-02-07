@@ -5,13 +5,11 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from typing import Dict
-import logging
 
-from config import config
+from app.core.config import settings
+from app.core.logging import get_logger
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 class EmailService:
@@ -19,11 +17,11 @@ class EmailService:
     
     def __init__(self):
         """Initialize email service with configuration."""
-        self.smtp_host = config.SMTP_HOST
-        self.smtp_port = config.SMTP_PORT
-        self.sender_email = config.SENDER_EMAIL
-        self.sender_password = config.SENDER_PASSWORD
-        self.recipient_email = config.RECIPIENT_EMAIL
+        self.smtp_host = settings.smtp_host
+        self.smtp_port = settings.smtp_port
+        self.sender_email = str(settings.sender_email)
+        self.sender_password = settings.sender_password
+        self.recipient_email = str(settings.recipient_email)
     
     def create_email_html(self, contact_data: Dict[str, str]) -> str:
         """
@@ -123,7 +121,7 @@ class EmailService:
             contact_data: Dictionary containing name, email, subject, message
             
         Returns:
-            True if email was sent successfully, False otherwise
+            True if email was sent successfully
             
         Raises:
             Exception: If email sending fails
@@ -144,9 +142,10 @@ class EmailService:
             
             # Include sender info in subject line
             subject = contact_data.get('subject', 'New Message')
-            if subject.lower() == 'none' or not subject:
-                subject = 'New Message'
-            msg['Subject'] = f"Portfolio Contact: {subject} (from {sender_name})"
+            if subject and subject.lower() not in ['none', '']:
+                msg['Subject'] = f"Portfolio Contact: {subject} (from {sender_name})"
+            else:
+                msg['Subject'] = f"Portfolio Contact: New Message (from {sender_name})"
             
             # Create HTML content
             html_content = self.create_email_html(contact_data)
