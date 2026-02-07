@@ -270,5 +270,5 @@ This project is part of your portfolio website.
 
 ---
 
-**Author:** Arnab  
-**Email:** ornab@dummy.com
+**Author:** Ornab  
+**Email:** ornabbiswwass@gmail.com
